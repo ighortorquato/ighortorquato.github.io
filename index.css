@@ -1,0 +1,30 @@
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.perfil {
+  border-radius: 50%;
+  border: 2px solid #030030;
+  width: 200px;
+  height: 200px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background-color: #142634
+}
+
+h1, h5, a {
+  font-family: 'Poppins', sans-serif;
+  color: #DBE9FF;
+  text-decoration: none;
+}

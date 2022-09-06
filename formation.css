@@ -1,0 +1,9 @@
+body {
+  background-color: #142634
+}
+
+h3, p, ul li{
+  font-family: 'Poppins', sans-serif;
+  color: #DBE9FF;
+  text-decoration: none;
+}

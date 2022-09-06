@@ -1,0 +1,16 @@
+body {
+  background-color: #142634
+}
+
+h1, p, a, ul li, label{
+  font-family: 'Poppins', sans-serif;
+  color: #DBE9FF;
+  text-decoration: none;
+}
+
+main{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

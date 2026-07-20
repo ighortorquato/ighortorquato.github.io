@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { useLang } from '@/context/LangContext';
-import { GithubIcon, LinkedinIcon, ArrowRight } from './icons';
+import { GithubIcon, LinkedinIcon, ArrowRight, DownloadIcon } from './icons';
 
 const anim = (delay: number): React.CSSProperties => ({
   opacity: 0,
@@ -10,11 +11,31 @@ const anim = (delay: number): React.CSSProperties => ({
 });
 
 export default function Hero() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
+  const [generatingCV, setGeneratingCV] = useState(false);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 64, behavior: 'smooth' });
+  };
+
+  const downloadCV = async () => {
+    if (generatingCV) return;
+    setGeneratingCV(true);
+    try {
+      const [{ pdf }, { default: ResumeDocument }] = await Promise.all([import('@react-pdf/renderer'), import('./ResumeDocument')]);
+      const blob = await pdf(<ResumeDocument lang={lang} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = lang === 'pt' ? 'Curriculo_Ighor_Torquato.pdf' : 'Resume_Ighor_Torquato.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } finally {
+      setGeneratingCV(false);
+    }
   };
 
   const socialBtn: React.CSSProperties = {
@@ -88,6 +109,10 @@ export default function Hero() {
         </button>
         <button data-cursor className="btn-outline" onClick={() => scrollTo('contact')}>
           {t.hero.cta2}
+        </button>
+        <button data-cursor className="btn-outline" onClick={downloadCV} disabled={generatingCV}>
+          {generatingCV ? t.hero.cta3Loading : t.hero.cta3}
+          <DownloadIcon />
         </button>
         <div style={{ display: 'flex', gap: 10 }}>
           <a href="https://github.com/ighortorquato" target="_blank" rel="noopener noreferrer" aria-label="GitHub" style={socialBtn}>

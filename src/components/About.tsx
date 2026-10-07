@@ -56,12 +56,13 @@ export default function About() {
 
         <Reveal delay={0.08}>
           <p style={{ fontSize: 'clamp(1.05rem,1.6vw,1.35rem)', lineHeight: 1.62, color: '#d6d3cc', margin: '0 0 22px', fontWeight: 500, textWrap: 'pretty' }}>
-            {t.about.p1a}
-            <span style={{ color: 'var(--ac)' }}>{t.about.p1hi}</span>
-            {t.about.p1b}
+            {t.about.paragraphs[0]}
           </p>
-          <p style={{ fontSize: '1.02rem', lineHeight: 1.72, color: 'var(--muted)', margin: '0 0 18px', textWrap: 'pretty' }}>{t.about.p2}</p>
-          <p style={{ fontSize: '1.02rem', lineHeight: 1.72, color: 'var(--muted)', margin: 0, textWrap: 'pretty' }}>{t.about.p3}</p>
+          {t.about.paragraphs.slice(1).map((para, i, rest) => (
+            <p key={i} style={{ fontSize: '1.02rem', lineHeight: 1.72, color: 'var(--muted)', margin: i === rest.length - 1 ? 0 : '0 0 18px', textWrap: 'pretty' }}>
+              {para}
+            </p>
+          ))}
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginTop: 32 }}>
             {chip(

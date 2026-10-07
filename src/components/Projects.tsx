@@ -4,7 +4,7 @@ import { useLang } from '@/context/LangContext';
 import { projects } from '@/lib/data';
 import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
-import { GithubIcon, ExternalLink, LockIcon } from './icons';
+import { GithubIcon, ExternalLink, LockIcon, ArrowRight } from './icons';
 
 export default function Projects() {
   const { t, lang } = useLang();
@@ -72,18 +72,32 @@ export default function Projects() {
               </span>
             ))}
           </div>
-          {featured.demo && (
-            <a
-              href={featured.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'var(--ac)', color: 'var(--bg)', borderRadius: 11, padding: '13px 24px', fontWeight: 700, fontSize: 14.5, whiteSpace: 'nowrap' }}
-            >
-              {t.projects.viewDemo}
-              <ExternalLink width={15} height={15} strokeWidth={2.4} />
-            </a>
-          )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+            {featured.demo && (
+              <a
+                href={featured.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'var(--ac)', color: 'var(--bg)', borderRadius: 11, padding: '13px 24px', fontWeight: 700, fontSize: 14.5, whiteSpace: 'nowrap' }}
+              >
+                {t.projects.viewDemo}
+                <ExternalLink width={15} height={15} strokeWidth={2.4} />
+              </a>
+            )}
+            {featured.caseStudy && (
+              <a
+                href={featured.caseStudy}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor
+                className="btn-outline"
+              >
+                {t.projects.viewCaseStudy}
+                <ArrowRight />
+              </a>
+            )}
+          </div>
         </div>
       </Reveal>
 

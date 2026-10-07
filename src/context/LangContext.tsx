@@ -10,18 +10,24 @@ interface LangContextType {
 }
 
 const LangContext = createContext<LangContextType>({
-  lang: 'pt',
-  t: translations.pt,
+  lang: 'en',
+  t: translations.en,
   toggle: () => {},
 });
 
 export function LangProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>('pt');
+  const [lang, setLang] = useState<Lang>('en');
 
   useEffect(() => {
     const saved = localStorage.getItem('portfolio-lang') as Lang | null;
+    // Read after mount so the static export hydrates with the EN default without a mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved === 'pt' || saved === 'en') setLang(saved);
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const toggle = () => {
     setLang((prev) => {

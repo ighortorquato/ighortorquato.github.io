@@ -24,25 +24,37 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+const SITE_URL = 'https://ighortorquato.github.io';
+const TITLE = 'Ighor Torquato — Full-Stack Engineer';
+const DESCRIPTION =
+  'Full-stack engineer building web and mobile products end-to-end with TypeScript, React, React Native and Node.js. Founder of ItapoFood. Open to remote roles.';
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://ighortorquato.vercel.app'),
-  title: 'Ighor Torquato — Full Stack Developer',
-  description:
-    'Full Stack Developer especializado em React, React Native, TypeScript, Node.js e Go. Plataformas web e mobile escaláveis com engenharia assistida por IA — do código ao cloud.',
-  keywords: ['Full Stack Developer', 'React', 'React Native', 'TypeScript', 'Node.js', 'Go', 'Python', 'Azure', 'Docker', 'AI', 'Cursor', 'Copilot'],
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  keywords: ['Full-Stack Engineer', 'Product Engineer', 'TypeScript', 'React', 'React Native', 'Node.js', 'PostgreSQL', 'Remote'],
   authors: [{ name: 'Ighor Torquato dos Santos' }],
+  alternates: { canonical: `${SITE_URL}/` },
   openGraph: {
-    title: 'Ighor Torquato — Full Stack Developer',
-    description: 'Full Stack Developer · React · React Native · TypeScript · Node.js · Go · do código ao cloud',
+    title: TITLE,
+    description: DESCRIPTION,
     type: 'website',
+    url: `${SITE_URL}/`,
     images: [{ url: '/Ighor_perfil.jpeg', width: 400, height: 400, alt: 'Ighor Torquato' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ['/Ighor_perfil.jpeg'],
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="pt"
+      lang="en"
       className={`${bricolage.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <body className={spaceGrotesk.className}>

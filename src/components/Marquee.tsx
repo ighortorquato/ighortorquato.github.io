@@ -1,9 +1,8 @@
 'use client';
 
 const TECH = [
-  'TypeScript', 'React', 'Next.js', 'Node.js', 'Go', 'Python', 'PostgreSQL', 'SQL Server',
-  'Azure', 'Docker', 'Kubernetes', 'React Native', 'Expo', 'Prisma', 'Redis', 'Socket.io',
-  'Tailwind', 'Express', 'Flask', 'Gin',
+  'TypeScript', 'React', 'Next.js', 'Node.js', 'React Native', 'Expo', 'Express', 'Prisma',
+  'PostgreSQL', 'Redis', 'Socket.io', 'SQL Server', 'Azure', 'Docker', 'Tailwind', 'Go', 'Python',
 ];
 
 function Row({ ariaHidden }: { ariaHidden?: boolean }) {

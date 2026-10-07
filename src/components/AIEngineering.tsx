@@ -16,9 +16,7 @@ export default function AIEngineering() {
         as="div"
         style={{ fontSize: 'clamp(1.05rem,1.7vw,1.4rem)', lineHeight: 1.55, color: '#d6d3cc', maxWidth: 840, margin: '0 0 54px', fontWeight: 500, textWrap: 'pretty' }}
       >
-        {t.ai.introA}
-        <span style={{ color: 'var(--ac)' }}>{t.ai.introHi}</span>
-        {t.ai.introB}
+        {t.ai.intro}
       </Reveal>
 
       <div className="ai-grid grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12" style={{ alignItems: 'start', marginBottom: 18 }}>
@@ -63,24 +61,21 @@ export default function AIEngineering() {
                 </svg>
                 {t.ai.ruleFile}
               </span>
+              <span className="font-mono" style={{ marginLeft: 'auto', fontSize: 10.5, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--faint)' }}>
+                {t.ai.ruleNote}
+              </span>
             </div>
             <pre className="font-mono" style={{ margin: 0, padding: '22px 20px', fontSize: 12.5, lineHeight: 1.75, color: '#cfcdc7', overflowX: 'auto', whiteSpace: 'pre' }}>
-              <span style={{ color: 'var(--faint)' }}>---</span>{'\n'}
-              <span style={{ color: '#5B8DEF' }}>description</span>: ItapoFood — monorepo conventions{'\n'}
-              <span style={{ color: '#5B8DEF' }}>globs</span>: [<span style={{ color: '#3FB68B' }}>&quot;apps/**&quot;</span>, <span style={{ color: '#3FB68B' }}>&quot;packages/**&quot;</span>]{'\n'}
-              <span style={{ color: '#5B8DEF' }}>alwaysApply</span>: <span style={{ color: 'var(--ac)' }}>true</span>{'\n'}
-              <span style={{ color: 'var(--faint)' }}>---</span>{'\n'}{'\n'}
-              <span style={{ color: '#5B8DEF' }}>context</span>:{'\n'}
-              {'  '}<span style={{ color: 'var(--faint)' }}># Turborepo · Node/Express/Prisma · RN/Expo</span>{'\n'}
-              {'  '}- shared contracts em <span style={{ color: '#3FB68B' }}>packages/types</span> — never duplicate{'\n'}
-              {'  '}- reuse hooks/components de <span style={{ color: '#3FB68B' }}>packages/ui</span>{'\n'}{'\n'}
-              <span style={{ color: '#5B8DEF' }}>rules</span>:{'\n'}
-              {'  '}- validar todo input com <span style={{ color: 'var(--ac)' }}>Zod</span> schemas{'\n'}
-              {'  '}- gerar testes p/ services e regras de negócio{'\n'}
-              {'  '}- PRs pequenos · <span style={{ color: 'var(--ac)' }}>Conventional Commits</span>{'\n'}{'\n'}
-              <span style={{ color: '#5B8DEF' }}>mcp</span>:{'\n'}
-              {'  '}- <span style={{ color: '#E8B84B' }}>prisma</span>{'   '}<span style={{ color: 'var(--faint)' }}># inspect schema &amp; safe migrations</span>{'\n'}
-              {'  '}- <span style={{ color: '#E8B84B' }}>github</span>{'   '}<span style={{ color: 'var(--faint)' }}># open PRs, read issues</span>
+              <span style={{ color: 'var(--faint)' }}># CLAUDE.md</span>{'\n'}{'\n'}
+              <span style={{ color: '#5B8DEF' }}>## Stack</span>{'\n'}
+              - Turborepo · Node/Express/Prisma · RN/Expo{'\n'}{'\n'}
+              <span style={{ color: '#5B8DEF' }}>## Rules</span>{'\n'}
+              - shared contracts in <span style={{ color: '#3FB68B' }}>packages/types</span> — never duplicate{'\n'}
+              - validate all input with <span style={{ color: 'var(--ac)' }}>Zod</span> schemas{'\n'}
+              - tests for services and business rules{'\n'}
+              - small PRs · <span style={{ color: 'var(--ac)' }}>Conventional Commits</span>{'\n'}{'\n'}
+              <span style={{ color: '#5B8DEF' }}>## Workflow</span>{'\n'}
+              - keep context lean — read only what the task needs
             </pre>
           </div>
         </Reveal>

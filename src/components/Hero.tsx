@@ -23,12 +23,24 @@ export default function Hero() {
     if (generatingCV) return;
     setGeneratingCV(true);
     try {
-      const [{ pdf }, { default: ResumeDocument }] = await Promise.all([import('@react-pdf/renderer'), import('./ResumeDocument')]);
-      const blob = await pdf(<ResumeDocument lang={lang} />).toBlob();
+      const filename = lang === 'pt' ? 'Curriculo_Ighor_Torquato.pdf' : 'Resume_Ighor_Torquato.pdf';
+      // Serve a hand-made PDF when /cv-en.pdf or /cv-pt.pdf exists in public/; otherwise generate it from site data.
+      // TODO(ighor): substituir pelo CV em inglês — add public/cv-en.pdf (and cv-pt.pdf) and it will be served automatically.
+      let blob: Blob | null = null;
+      try {
+        const res = await fetch(`/cv-${lang}.pdf`, { cache: 'no-cache' });
+        if (res.ok && (res.headers.get('content-type') ?? '').includes('pdf')) blob = await res.blob();
+      } catch {
+        /* fall back to the generated PDF */
+      }
+      if (!blob) {
+        const [{ pdf }, { default: ResumeDocument }] = await Promise.all([import('@react-pdf/renderer'), import('./ResumeDocument')]);
+        blob = await pdf(<ResumeDocument lang={lang} />).toBlob();
+      }
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = lang === 'pt' ? 'Curriculo_Ighor_Torquato.pdf' : 'Resume_Ighor_Torquato.pdf';
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -97,10 +109,11 @@ export default function Hero() {
       </h1>
 
       <p style={{ ...anim(0.32), maxWidth: 560, margin: '32px 0 0', fontSize: 'clamp(1rem,1.5vw,1.18rem)', lineHeight: 1.65, color: '#b6b3ac' }}>
-        {t.hero.descA}
-        <span style={{ color: 'var(--ink)', fontWeight: 600 }}>{t.hero.descHi}</span>
-        {t.hero.descB}
+        {t.hero.desc}
       </p>
+      <div className="font-mono" style={{ ...anim(0.36), marginTop: 16, fontSize: 13, letterSpacing: '0.08em', color: 'var(--faint)' }}>
+        {t.hero.stackLine}
+      </div>
 
       <div style={{ ...anim(0.42), display: 'flex', flexWrap: 'wrap', gap: 14, marginTop: 40 }}>
         <button data-cursor className="btn-primary" onClick={() => scrollTo('projects')}>
@@ -147,7 +160,7 @@ export default function Hero() {
         {[
           { l: t.hero.statCurrentL, v: '4Zoom · Nestlé' },
           { l: t.hero.statBaseL, v: t.hero.statBaseV },
-          { l: t.hero.statStackL, v: 'TS · React · Node · Go' },
+          { l: t.hero.statStackL, v: t.hero.statStackV },
         ].map((s) => (
           <div key={s.l} style={{ background: 'var(--bg)', padding: '18px 20px' }}>
             <div className="font-mono" style={{ fontSize: 10.5, letterSpacing: '0.18em', color: 'var(--faint)', textTransform: 'uppercase' }}>

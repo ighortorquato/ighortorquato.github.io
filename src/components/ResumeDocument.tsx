@@ -55,8 +55,8 @@ export default function ResumeDocument({ lang }: { lang: Lang }) {
           <View style={styles.contactRow}>
             <Text style={styles.contactItem}>ighortorquato@gmail.com</Text>
             <Text style={styles.contactItem}>{t.about.chipLoc}</Text>
-            <Link src="https://ighortorquato-cv.vercel.app" style={styles.contactItem}>
-              ighortorquato-cv.vercel.app
+            <Link src="https://ighortorquato.github.io" style={styles.contactItem}>
+              ighortorquato.github.io
             </Link>
             <Link src="https://www.linkedin.com/in/ighor-torquato-dos-santos-87050b13b/" style={styles.contactItem}>
               linkedin.com/in/ighor-torquato-dos-santos-87050b13b

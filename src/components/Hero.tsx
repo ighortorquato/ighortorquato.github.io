@@ -25,7 +25,6 @@ export default function Hero() {
     try {
       const filename = lang === 'pt' ? 'Curriculo_Ighor_Torquato.pdf' : 'Resume_Ighor_Torquato.pdf';
       // Serve a hand-made PDF when /cv-en.pdf or /cv-pt.pdf exists in public/; otherwise generate it from site data.
-      // TODO(ighor): substituir pelo CV em inglês — add public/cv-en.pdf (and cv-pt.pdf) and it will be served automatically.
       let blob: Blob | null = null;
       try {
         const res = await fetch(`/cv-${lang}.pdf`, { cache: 'no-cache' });

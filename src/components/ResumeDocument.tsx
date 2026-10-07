@@ -1,22 +1,15 @@
 import { Document, Page, Text, View, Link, StyleSheet } from '@react-pdf/renderer';
-import { experience, skillGroups, education, projects } from '@/lib/data';
+import { experience, skillGroups, education, projects, loc } from '@/lib/data';
 import { translations, Lang } from '@/lib/translations';
 
 const ACCENT = '#6d4fd1';
 const INK = '#1a1a1f';
 const MUTED = '#5b5b63';
 
-// data.ts keeps company names, stack tags and skill entries as single (non-bilingual) strings.
-// These overrides translate the ones that are Portuguese-specific when rendering the EN resume.
+// data.ts keeps company names as single (non-bilingual) strings; translate the Portuguese-specific ones for the EN resume.
 const enOverrides: Record<string, string> = {
   'Rede de Farmácias Estrela': 'Estrela Pharmacy Chain',
   'Tribunal de Justiça do Estado do Paraná · Estágio': 'Paraná State Court of Justice · Internship',
-  Infraestrutura: 'Infrastructure',
-  'Suporte TI': 'IT Support',
-  Redes: 'Networking',
-  'Português (nativo)': 'Portuguese (native)',
-  'Inglês (avançado)': 'English (advanced)',
-  'Espanhol (intermediário)': 'Spanish (intermediate)',
 };
 
 const tr = (value: string, lang: Lang) => (lang === 'en' ? (enOverrides[value] ?? value) : value);
@@ -54,11 +47,11 @@ export default function ResumeDocument({ lang }: { lang: Lang }) {
   const t = translations[lang];
 
   return (
-    <Document title={`Ighor Torquato dos Santos — ${t.hero.title1}`}>
+    <Document title={`Ighor Torquato dos Santos — ${t.hero.role}`}>
       <Page size="A4" style={styles.page}>
         <View>
           <Text style={styles.name}>Ighor Torquato dos Santos</Text>
-          <Text style={styles.title}>{t.hero.title1}</Text>
+          <Text style={styles.title}>{t.hero.role}</Text>
           <View style={styles.contactRow}>
             <Text style={styles.contactItem}>ighortorquato@gmail.com</Text>
             <Text style={styles.contactItem}>{t.about.chipLoc}</Text>
@@ -76,12 +69,11 @@ export default function ResumeDocument({ lang }: { lang: Lang }) {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t.about.title}</Text>
-          <Text style={styles.itemDesc}>
-            {t.about.p1a}
-            {t.about.p1hi}
-            {t.about.p1b}
-          </Text>
-          <Text style={styles.itemDesc}>{t.about.p2}</Text>
+          {t.about.paragraphs.map((para) => (
+            <Text key={para} style={styles.itemDesc}>
+              {para}
+            </Text>
+          ))}
         </View>
 
         <View style={styles.section}>
@@ -95,8 +87,12 @@ export default function ResumeDocument({ lang }: { lang: Lang }) {
                 <Text style={styles.itemMeta}>{exp.period[lang]}</Text>
               </View>
               <Text style={styles.itemMeta}>{exp.location[lang]}</Text>
-              <Text style={styles.itemDesc}>{exp.description[lang]}</Text>
-              <Text style={styles.itemStack}>{exp.stack.map((s) => tr(s, lang)).join(' · ')}</Text>
+              {exp.bullets[lang].map((b) => (
+                <Text key={b} style={styles.itemDesc}>
+                  • {b}
+                </Text>
+              ))}
+              <Text style={styles.itemStack}>{exp.stack.map((s) => loc(s, lang)).join(' · ')}</Text>
             </View>
           ))}
         </View>
@@ -124,11 +120,7 @@ export default function ResumeDocument({ lang }: { lang: Lang }) {
 
         <View style={styles.section} wrap={false}>
           <Text style={styles.sectionTitle}>{t.ai.title}</Text>
-          <Text style={styles.itemDesc}>
-            {t.ai.introA}
-            {t.ai.introHi}
-            {t.ai.introB}
-          </Text>
+          <Text style={styles.itemDesc}>{t.ai.intro}</Text>
         </View>
 
         <View style={styles.section}>
@@ -136,7 +128,7 @@ export default function ResumeDocument({ lang }: { lang: Lang }) {
           {skillGroups.map((group) => (
             <View key={group.key} style={styles.skillGroup}>
               <Text style={styles.skillLabel}>{t.skills.groups[group.key as keyof typeof t.skills.groups]}</Text>
-              <Text style={styles.skillValue}>{group.skills.map((s) => tr(s, lang)).join(', ')}</Text>
+              <Text style={styles.skillValue}>{group.skills.map((s) => loc(s, lang)).join(', ')}</Text>
             </View>
           ))}
         </View>

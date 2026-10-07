@@ -1,12 +1,12 @@
 'use client';
 
 import { useLang } from '@/context/LangContext';
-import { skillGroups } from '@/lib/data';
+import { skillGroups, loc } from '@/lib/data';
 import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
 
 export default function Skills() {
-  const { t } = useLang();
+  const { t, lang } = useLang();
   const groupNames = t.skills.groups as Record<string, string>;
 
   return (
@@ -26,7 +26,7 @@ export default function Skills() {
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
                 {group.skills.map((s) => (
                   <span
-                    key={s}
+                    key={loc(s, 'en')}
                     style={{
                       fontSize: 13.5,
                       color: '#cfcdc7',
@@ -36,7 +36,7 @@ export default function Skills() {
                       background: 'rgba(255,255,255,0.02)',
                     }}
                   >
-                    {s}
+                    {loc(s, lang)}
                   </span>
                 ))}
               </div>

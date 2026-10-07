@@ -1,7 +1,7 @@
 'use client';
 
 import { useLang } from '@/context/LangContext';
-import { experience } from '@/lib/data';
+import { experience, loc } from '@/lib/data';
 import Reveal from './Reveal';
 import SectionHeading from './SectionHeading';
 
@@ -37,9 +37,11 @@ export default function Experience() {
                 boxShadow: '0 0 0 4px var(--bg), 0 0 14px var(--ac-glow)',
               }}
             />
-            <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.08em', color: 'var(--ac)', marginBottom: 8 }}>
-              {job.period[lang]}
-            </div>
+            {job.period[lang] && (
+              <div className="font-mono" style={{ fontSize: 12, letterSpacing: '0.08em', color: 'var(--ac)', marginBottom: 8 }}>
+                {job.period[lang]}
+              </div>
+            )}
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'baseline', gap: '6px 12px', marginBottom: 4 }}>
               <h3 className="font-display" style={{ fontWeight: 700, fontSize: '1.5rem', margin: 0, color: 'var(--ink-bright)' }}>
                 {job.role[lang]}
@@ -50,13 +52,17 @@ export default function Experience() {
             <div className="font-mono" style={{ fontSize: 11.5, color: 'var(--faint)', marginBottom: 14 }}>
               {job.location[lang]}
             </div>
-            <p style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--muted)', maxWidth: 760, margin: '0 0 16px', textWrap: 'pretty' }}>
-              {job.description[lang]}
-            </p>
+            <ul style={{ fontSize: '1rem', lineHeight: 1.7, color: 'var(--muted)', maxWidth: 760, margin: '0 0 16px', paddingLeft: 20, listStyle: 'disc', textWrap: 'pretty' }}>
+              {job.bullets[lang].map((b) => (
+                <li key={b} style={{ marginBottom: 6 }}>
+                  {b}
+                </li>
+              ))}
+            </ul>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
               {job.stack.map((tech) => (
-                <span key={tech} className="chip">
-                  {tech}
+                <span key={loc(tech, 'en')} className="chip">
+                  {loc(tech, lang)}
                 </span>
               ))}
             </div>

@@ -1,64 +1,47 @@
-# Redesign — instalação no seu portfólio
+# Portfolio — Ighor Torquato
 
-Redesign "editorial técnico" (dark ember `#FF5C35`, tipografia statement, dot-grid
-interativo, cursor custom, reveals no scroll, seção **Engenharia com IA**).
-Mesma stack do seu repo: **Next 16 · TypeScript · Tailwind v4 · framer-motion · LangContext**.
+Site-portfólio/CV online, bilíngue (EN padrão · PT), focado em vagas remotas de
+Full-Stack / Product Engineer. Publicado em https://ighortorquato.github.io/.
 
-## Como aplicar
+**Stack:** Next 16 (App Router, `output: 'export'`) · TypeScript · Tailwind v4 · Framer Motion · `@react-pdf/renderer`.
 
-Copie a pasta `src/` deste pacote por cima da `src/` do seu projeto
-(`ighortorquato.github.io/src/`). Os arquivos são drop-in e mantêm os mesmos
-caminhos/`@/` imports.
-
-```
-src/
-├── app/
-│   ├── globals.css          ← SUBSTITUI  (novo design system: vars --ac, painéis, botões)
-│   ├── layout.tsx           ← SUBSTITUI  (fontes: Bricolage Grotesque + Space Grotesk + JetBrains Mono)
-│   └── page.tsx             ← SUBSTITUI  (monta Background + nova ordem de seções)
-├── lib/
-│   ├── translations.ts      ← SUBSTITUI  (textos PT/EN reescritos + bloco `ai`)
-│   └── data.ts              ← SUBSTITUI  (location/tag/degree/period agora {pt,en}; + aiSteps/aiTools)
-└── components/
-    ├── Background.tsx       ← NOVO  (dot-grid canvas + cursor custom)
-    ├── Reveal.tsx           ← NOVO  (wrapper framer-motion p/ reveal no scroll)
-    ├── SectionHeading.tsx   ← NOVO  (cabeçalho numerado "01 — Título")
-    ├── icons.tsx            ← NOVO  (GitHub, LinkedIn, setas, lock, mail)
-    ├── Marquee.tsx          ← NOVO  (ticker de tecnologias)
-    ├── AIEngineering.tsx    ← NOVO  (seção 05 — configuração de agentes + card editor)
-    ├── Navbar.tsx           ← SUBSTITUI  (toggle segmentado PT|EN, link "Engenharia com IA")
-    ├── Hero.tsx             ← SUBSTITUI
-    ├── About.tsx            ← SUBSTITUI
-    ├── Skills.tsx           ← SUBSTITUI
-    ├── Experience.tsx       ← SUBSTITUI
-    ├── Projects.tsx         ← SUBSTITUI
-    ├── Education.tsx        ← SUBSTITUI
-    ├── Contact.tsx          ← SUBSTITUI
-    └── Footer.tsx           ← SUBSTITUI
-```
-
-Depois:
+## Comandos
 
 ```bash
-npm run dev      # confira em http://localhost:3000
-npm run build    # valida o build de produção
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build    # export estático em ./out
 ```
 
-Sem dependências novas — tudo usa o que já está no seu `package.json`.
+## Onde editar o conteúdo
 
-## Re-tematizar (1 valor)
+| O quê | Arquivo |
+| --- | --- |
+| Textos (hero, about, nav, contato, seção de IA), EN e PT | `src/lib/translations.ts` |
+| Projetos, experiência, skills, formação, cards da seção de IA | `src/lib/data.ts` |
+| Metadados, canonical, OG/Twitter | `src/app/layout.tsx` |
+| Cores / design system (`--ac` e variáveis em `:root`) | `src/app/globals.css` |
+| Ticker de tecnologias | `src/components/Marquee.tsx` |
 
-Toda a cor de acento vem de `--ac` em `globals.css` (`:root`). Troque essa linha
-(e os 3 `--ac-*` logo abaixo) e o site inteiro muda — o dot-grid lê `--ac` em runtime.
+Todo texto existe em `{ pt, en }`. O idioma padrão é EN; a escolha do toggle fica
+em `localStorage` (`portfolio-lang`) — ver `src/context/LangContext.tsx`.
 
-## ⚠️ Confira antes de publicar
+Pendências de conteúdo estão marcadas no código como `TODO(ighor)`:
 
-1. **Conteúdo da seção IA** (`data.ts` → `aiSteps`/`aiTools` e o card `.mdc` em
-   `AIEngineering.tsx`): escrevi uma configuração realista (regras `.cursor/rules`,
-   indexação, agent mode, MCP Prisma/GitHub). **Ajuste para refletir exatamente o
-   seu setup real** no ItapoFood.
-2. **Formulário de contato**: o redesign usa CTAs diretos (e-mail + LinkedIn), como
-   no mock que você aprovou — não tem mais o `<form>`. Seu `app/api/contact/route.ts`
-   fica intacto, só deixa de ser usado. Se quiser o form de volta, me avise que
-   reintegro no novo visual.
-3. `metadata.metadataBase` em `layout.tsx` continua apontando p/ `ighortorquato.vercel.app`.
+```bash
+grep -rn "TODO(ighor)" src
+```
+
+## Currículo (PDF)
+
+O botão "Download CV" gera o PDF no navegador a partir do conteúdo do site
+(`src/components/ResumeDocument.tsx`), no idioma ativo. Para usar um PDF feito à
+mão, coloque `public/cv-en.pdf` e/ou `public/cv-pt.pdf`: se existirem, eles são
+servidos no lugar do PDF gerado.
+
+## Deploy
+
+Push na `main` dispara `.github/workflows/deploy.yml`, que faz o build e publica
+`./out` no **GitHub Pages**. O `metadataBase` e o canonical apontam para
+`https://ighortorquato.github.io`.

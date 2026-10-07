@@ -20,6 +20,8 @@ export function LangProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('portfolio-lang') as Lang | null;
+    // Read after mount so the static export hydrates with the EN default without a mismatch.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved === 'pt' || saved === 'en') setLang(saved);
   }, []);
 
